@@ -1,7 +1,9 @@
 #ifndef CONFIG
 #define CONFIG
 
+#include <WiFiClient.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <ESPAsyncWiFiManager.h>
@@ -10,6 +12,7 @@
 const int port = 80;
 AsyncWebServer server(port);
 DNSServer dns;
+String serverName = "http://mthrowaway488-001-site1.dtempurl.com/mq3/read";
 
 class Config
 {

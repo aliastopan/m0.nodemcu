@@ -30,5 +30,5 @@ void loop()
 		digitalWrite(WARNING_PIN, LOW);
 
 	API::Loop();
-	delay(1000);
+	delay(5000);
 }
