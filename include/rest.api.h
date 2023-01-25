@@ -50,35 +50,15 @@ class API
         HTTPClient http;
         http.begin(client, serverName);
 
-        int httpResponseCode = http.GET();
-        String payload = "{}";
+        http.addHeader("Content-Type", "application/json");
+        int httpCode = http.POST(json_string);
+        String payload = http.getString();
+        Serial.print("HttpCode: ");
+        Serial.println(httpCode);
+        Serial.print("Payload: ");
+        Serial.println(payload);
 
-        if(httpResponseCode > 0)
-        {
-            Serial.print("HTTP Response code: ");
-            Serial.println(httpResponseCode);
-            payload = http.getString();
-            Serial.print("Payload: ");
-            Serial.println(payload);
-        }
-        else
-        {
-            Serial.print("Error code: ");
-            Serial.println(httpResponseCode);
-        }
-        // Free resources
         http.end();
-
-        // http.addHeader("Content-Type", "application/json");
-        // int httpCode = http.POST(json_string);
-        // String payload = http.getString();
-
-        // Serial.print("json: ");
-        // Serial.println(json_string);
-        // Serial.print("HttpCode: ");
-        // Serial.println(httpCode);
-        // Serial.print("Payload: ");
-        // Serial.println(payload);
     }
 };
 

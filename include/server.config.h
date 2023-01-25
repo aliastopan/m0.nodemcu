@@ -12,7 +12,7 @@
 const int port = 80;
 AsyncWebServer server(port);
 DNSServer dns;
-String serverName = "http://mthrowaway488-001-site1.dtempurl.com/mq3/read";
+String serverName = "http://mthrowaway488-001-site1.dtempurl.com/mq3";
 
 class Config
 {
