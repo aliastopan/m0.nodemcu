@@ -24,7 +24,6 @@ class MQ
     static float CalibrateResistance(int raw_adc)
     {
         return abs( (((float)RL_VALUE*(1023-raw_adc)/raw_adc)) );
-        // return (((float)RL_VALUE*(raw_adc-1023)/raw_adc)) * 100;
     }
 
     static int Calculate(float sample_ro_ratio)
@@ -68,17 +67,11 @@ class MQ
 
     static void Loop()
     {
-	    Serial.print("adc: ");
-	    Serial.print(analogRead(MQ_PIN));
-	    Serial.print("\t");
-	    Serial.print("rs/ro: ");
-	    Serial.print(Read(MQ_PIN));
-	    Serial.print("/");
-	    Serial.print(Ro);
-	    Serial.print("\t");
-        Serial.print(Read(MQ_PIN)/Ro);
+        float value = 10-Read(MQ_PIN)/Ro;
+        value = value < 0 ? 0 : value;
+        Serial.print(pow(value, 3.32));
 	    Serial.print(" ppm");
-	    Serial.println("");
+        Serial.print(" \t");
     }
 };
 

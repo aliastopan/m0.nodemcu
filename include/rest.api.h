@@ -55,8 +55,6 @@ class API
         String payload = http.getString();
         Serial.print("HttpCode: ");
         Serial.println(httpCode);
-        Serial.print("Payload: ");
-        Serial.println(payload);
 
         http.end();
     }

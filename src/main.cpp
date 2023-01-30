@@ -35,13 +35,13 @@ void loop()
 	else
 		digitalWrite(WARNING_PIN, LOW);
 
-	// Serial.print(mq3_analog);
-	// Serial.print("\t");
-	// Serial.println(mq3_digital);
 	MQ::Loop();
-
-
-	// API::Loop();
+	API::Loop();
 	delay(250);
+	Serial.print("\n");
+
+	Serial.print("alarm: ");
+	Serial.print(mq3_digital == 1 ? "on": "off");
+    Serial.print(" \t");
 }
 
