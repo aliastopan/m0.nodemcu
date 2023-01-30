@@ -13,7 +13,8 @@ int mq3_digital = 0;
 bool isBegin = false;
 int minute = 5;
 unsigned long start = 0;
-unsigned long duration = (1000 * 60) * minute;
+unsigned long duration = 1000 * 30;
+// unsigned long duration = (1000 * 60) * minute;
 unsigned long timer = 0;
 
 class API
@@ -45,8 +46,11 @@ class API
         server.begin();
     }
 
-    static void ScheduledLoop()
+    static void Loop()
     {
+        // Call API
+        HttpPost("/write/realtime", "realtime");
+
         if(!isBegin)
         {
             isBegin = true;
@@ -59,13 +63,13 @@ class API
             if(timer > start + duration)
             {
                 // Call API
-                HttpPost();
+                HttpPost("/write", "record");
                 isBegin = false;
             }
         }
     }
 
-    static void HttpPost()
+    static void HttpPost(String endpoint, String tag)
     {
         doc["analogValue"] = mq3_analog;
         doc["digitalValue"] = mq3_digital;
@@ -74,34 +78,16 @@ class API
 
         WiFiClient client;
         HTTPClient http;
-        http.begin(client, serverName);
+        http.begin(client, serverName + endpoint);
 
         http.addHeader("Content-Type", "application/json");
         int httpCode = http.POST(json_string);
         String payload = http.getString();
         Serial.print("HttpCode: ");
         Serial.print(httpCode);
-
-        http.end();
-    }
-
-    static void Loop()
-    {
-        doc["analogValue"] = mq3_analog;
-        doc["digitalValue"] = mq3_digital;
-
-        serializeJson(doc, json_string);
-
-        WiFiClient client;
-        HTTPClient http;
-        http.begin(client, serverName);
-
-        http.addHeader("Content-Type", "application/json");
-        int httpCode = http.POST(json_string);
-        String payload = http.getString();
-        Serial.print("HttpCode: ");
-        Serial.print(httpCode);
-
+        Serial.print("\t");
+        Serial.print(tag);
+        Serial.print("\t");
         http.end();
     }
 };

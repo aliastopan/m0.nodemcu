@@ -27,7 +27,8 @@ void setup()
 
 void loop()
 {
-	mq3_analog = analogRead(MQ3_ANALOG);
+	MQ::Loop();
+	mq3_analog = PPM;
 	mq3_digital = invert(digitalRead(MQ3_DIGITAL));
 
 	if(mq3_digital == 1)
@@ -35,13 +36,13 @@ void loop()
 	else
 		digitalWrite(WARNING_PIN, LOW);
 
-	MQ::Loop();
-	API::ScheduledLoop();
-	delay(250);
-	Serial.print("\n");
+	API::Loop();
 
+	Serial.print("\n");
 	Serial.print("alarm: ");
 	Serial.print(mq3_digital == 1 ? "on": "off");
     Serial.print(" \t");
+
+	delay(1000);
 }
 

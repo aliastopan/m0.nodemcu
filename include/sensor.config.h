@@ -17,6 +17,7 @@
 
 float LPGCurve[3] = { 2.3, 0.21, 0.47 };
 float Ro = 10;
+float PPM = 0;
 
 class MQ
 {
@@ -69,7 +70,8 @@ class MQ
     {
         float value = 10-Read(MQ_PIN)/Ro;
         value = value < 0 ? 0 : value;
-        Serial.print(pow(value, 3.32));
+        PPM = pow(value, 3.32);
+        Serial.print(PPM);
 	    Serial.print(" ppm");
         Serial.print(" \t");
     }
