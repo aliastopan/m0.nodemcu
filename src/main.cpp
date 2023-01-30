@@ -36,7 +36,7 @@ void loop()
 		digitalWrite(WARNING_PIN, LOW);
 
 	MQ::Loop();
-	API::Loop();
+	API::ScheduledLoop();
 	delay(250);
 	Serial.print("\n");
 

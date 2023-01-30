@@ -10,6 +10,12 @@ char json_string[256];
 int mq3_analog = 0;
 int mq3_digital = 0;
 
+bool isBegin = false;
+int minute = 5;
+unsigned long start = 0;
+unsigned long duration = (1000 * 60) * minute;
+unsigned long timer = 0;
+
 class API
 {
     private:
@@ -39,6 +45,46 @@ class API
         server.begin();
     }
 
+    static void ScheduledLoop()
+    {
+        if(!isBegin)
+        {
+            isBegin = true;
+            start = millis();
+        }
+
+        if(isBegin)
+        {
+            timer = millis();
+            if(timer > start + duration)
+            {
+                // Call API
+                HttpPost();
+                isBegin = false;
+            }
+        }
+    }
+
+    static void HttpPost()
+    {
+        doc["analogValue"] = mq3_analog;
+        doc["digitalValue"] = mq3_digital;
+
+        serializeJson(doc, json_string);
+
+        WiFiClient client;
+        HTTPClient http;
+        http.begin(client, serverName);
+
+        http.addHeader("Content-Type", "application/json");
+        int httpCode = http.POST(json_string);
+        String payload = http.getString();
+        Serial.print("HttpCode: ");
+        Serial.print(httpCode);
+
+        http.end();
+    }
+
     static void Loop()
     {
         doc["analogValue"] = mq3_analog;
@@ -54,7 +100,7 @@ class API
         int httpCode = http.POST(json_string);
         String payload = http.getString();
         Serial.print("HttpCode: ");
-        Serial.println(httpCode);
+        Serial.print(httpCode);
 
         http.end();
     }
