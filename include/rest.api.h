@@ -11,10 +11,9 @@ int mq3_analog = 0;
 int mq3_digital = 0;
 
 bool isBegin = false;
-int minute = 5;
+int minute = 3;
 unsigned long start = 0;
-unsigned long duration = 1000 * 30;
-// unsigned long duration = (1000 * 60) * minute;
+unsigned long duration = (1000 * 60) * minute;
 unsigned long timer = 0;
 
 class API
