@@ -70,7 +70,7 @@ class MQ
     {
         float value = 10-Read(MQ_PIN)/Ro;
         value = value < 0 ? 0 : value;
-        PPM = pow(value, 3.32);
+        PPM = pow(value, 2.478);
         Serial.print(PPM);
 	    Serial.print(" ppm");
         Serial.print(" \t");

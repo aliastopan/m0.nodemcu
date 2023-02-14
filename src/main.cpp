@@ -31,7 +31,7 @@ void loop()
 	mq3_analog = PPM;
 	mq3_digital = invert(digitalRead(MQ3_DIGITAL));
 
-	if(mq3_digital == 1 && PPM > 2000)
+	if(mq3_digital == 1 && PPM > 299)
 		digitalWrite(WARNING_PIN, HIGH);
 	else
 		digitalWrite(WARNING_PIN, LOW);
